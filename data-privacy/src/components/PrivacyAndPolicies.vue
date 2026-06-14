@@ -19,6 +19,8 @@ export default {
   name: 'string',
   created() {
     this.page = LANGCONST.lang.userPages.find((x) => x.page == 'privacy')
+
+    document.title = LANGCONST.lang.pageTitles['Policies'].title
   },
   data() {
     return {
@@ -35,5 +37,14 @@ export default {
 }
 .privacy-page p {
   font-weight: 400 !important;
+}
+
+.overlay {
+  height: 300dvh;
+  width: 100%;
+  position: absolute;
+  background-color: white;
+  top: 0;
+  z-index: 9999;
 }
 </style>

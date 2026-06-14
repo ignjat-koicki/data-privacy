@@ -4,6 +4,14 @@ export class LangModel {
   pages: RouteLink[] = []
   footer: Footer
   userPages: Pages[] = []
+  pageTitles: PageTitles
+}
+
+export class PageTitles {
+  [key: string]: {
+    title: string
+    description: string
+  }
 }
 
 export class Footer {

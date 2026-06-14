@@ -104,7 +104,6 @@ export default {
       ]
     },
     changeLang(event: any) {
-      this.selected = event
       this.$emit('change', event)
     },
   },

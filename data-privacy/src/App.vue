@@ -27,6 +27,8 @@ export default {
     let lang = sessionStorage.getItem('lang')
     let langModel = new Lang()
 
+    this.overlay()
+
     let navigations = document.querySelectorAll<Element>('.navigation')
     for (let i = 0; i < navigations.length; i++) {
       if (i != navigations.length - 1) {
@@ -55,9 +57,25 @@ export default {
   },
   created() {},
   methods: {
+    overlay() {
+      const div = document.createElement('div')
+      div.classList.add('overlay')
+      document.querySelector('.wrapper').appendChild(div)
+
+      let overlays = document.querySelectorAll<Element>('.overlay')
+      setTimeout(() => {
+        for (let i = 0; i < overlays.length; i++) {
+          overlays[i].remove()
+        }
+      }, 300)
+    },
+    open(event) {
+      window.open(event, '_blank')
+    },
     changeLang(event: any) {
       let lang = event.value
       sessionStorage.setItem('lang', lang)
+
       window.location.reload()
     },
     getCurrentComponent() {
@@ -75,51 +93,53 @@ export default {
 </script>
 
 <template>
-  <header>
-    <div class="navigation">
-      <RouterLink
-        v-for="value in currentLang.pages"
-        class="route-link"
-        :key="value.route"
-        :to="{ name: value.route, params: { lang: routeLang ?? 'sr-latin-rs' } }"
-      >
+  <div class="wrapper">
+    <header>
+      <div class="navigation">
+        <RouterLink
+          v-for="value in currentLang.pages"
+          class="route-link"
+          :key="value.route"
+          :to="{ name: value.route, params: { lang: routeLang ?? 'sr-latin-rs' } }"
+        >
+          <div class="nav-item">
+            <span>{{ value.name }}</span>
+          </div>
+        </RouterLink>
         <div class="nav-item">
-          <span>{{ value.name }}</span>
+          <Language
+            :open="false"
+            :selected="selected"
+            :mobile="outerWidth < 900"
+            @change="changeLang($event)"
+          ></Language>
         </div>
-      </RouterLink>
-      <div class="nav-item">
-        <Language
-          :open="false"
-          :selected="selected"
-          :mobile="outerWidth < 900"
-          @change="changeLang($event)"
-        ></Language>
+      </div>
+    </header>
+
+    <div style="padding: 0px 14%">
+      <div class="wrapper wrapper-content">
+        <component :is="getCurrentComponent()" />
       </div>
     </div>
-  </header>
 
-  <div style="padding: 0px 14%">
-    <div class="wrapper wrapper-content">
-      <component :is="getCurrentComponent()" />
-    </div>
+    <footer class="section-footer">
+      <div class="footer-content" v-for="value in currentLang.footer.footerPages">
+        <span class="footer-title">
+          {{ value.name }}
+          <span class="footer-headline"></span>
+        </span>
+        <p class="footer-item" v-for="item in value.routes">
+          <a @click="open(item.route)">{{ item.name }}</a>
+        </p>
+      </div>
+    </footer>
+    <h2 class="copyright">
+      Copyright © 2024 Datamit Technologies. All rights reserved.&nbsp;
+      <a :href="'/' + routeLang">Terms of use</a> &nbsp; | &nbsp;
+      <a :href="'/' + routeLang + '/' + 'privacy-and-policies'">Privacy Policy</a>
+    </h2>
   </div>
-
-  <footer class="section-footer">
-    <div class="footer-content" v-for="value in currentLang.footer.footerPages">
-      <span class="footer-title">
-        {{ value.name }}
-        <span class="footer-headline"></span>
-      </span>
-      <p class="footer-item" v-for="item in value.routes">
-        <router-link :to="{ name: 'Terms' }">{{ item.name }}</router-link>
-      </p>
-    </div>
-  </footer>
-  <h2 class="copyright">
-    Copyright © 2024 Datamit Technologies. All rights reserved.&nbsp;
-    <a :href="'/' + routeLang">Terms of use</a> &nbsp; | &nbsp;
-    <a :href="'/' + routeLang + '/' + 'privacy-and-policies'">Privacy Policy</a>
-  </h2>
 </template>
 
 <style scoped>
@@ -128,8 +148,21 @@ export default {
   padding: 0;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .removed {
   display: none !important;
+}
+
+.overlay {
+  height: 300dvh;
+  width: 100%;
+  position: absolute;
+  background-color: white;
+  top: 0;
+  z-index: 9999;
 }
 
 .section-footer {
@@ -169,6 +202,11 @@ p {
   padding-left: 7% !important;
   padding-right: 7% !important;
 }
+
+.copyright a {
+  color: #0077ed;
+}
+
 .navigation {
   width: 100%;
   display: flex;

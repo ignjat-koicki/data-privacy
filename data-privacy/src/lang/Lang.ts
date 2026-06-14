@@ -38,6 +38,18 @@ export class Lang {
 const langSrb: LangModel = {
   Serbian: 'Srpski',
   English: 'Engleski',
+  pageTitles: {
+    Terms: {
+      title: 'Uslovi korišćenja - Datamit',
+      description: 'IStražite uslove korišćenja na Datamit web stranicima.',
+    },
+
+    Policies: {
+      title: 'Politika privatnosti - Datamit',
+      description:
+        'Pročitajte privatnosti, polise sa vodičima uključujići Datamit servise, proizvode i softwerska rešenja.',
+    },
+  },
   pages: [
     {
       route: 'Terms',
@@ -55,7 +67,7 @@ const langSrb: LangModel = {
         routes: [
           {
             name: 'O Datamit',
-            route: '',
+            route: 'https://www.datamit.rs/sr-latin-rs/about',
           },
           {
             name: 'Partneri',
@@ -99,11 +111,11 @@ const langSrb: LangModel = {
         routes: [
           {
             name: 'Kontaktirajte nas',
-            route: '',
+            route: 'https://www.datamit.rs/sr-latin-rs/contact',
           },
           {
             name: 'Centar za odgovre',
-            route: '',
+            route: 'https://www.datamit.rs/sr-latin-rs/support-and-help',
           },
         ] as RouteLink[],
       },
@@ -132,6 +144,18 @@ const langSrb: LangModel = {
 const langEng: LangModel = {
   Serbian: 'Serbian',
   English: 'English',
+  pageTitles: {
+    Terms: {
+      title: 'Terms of use - Datamit',
+      description: 'Find more about terms of use on Datamit pages.',
+    },
+
+    Policies: {
+      title: 'Privacy and policies - Datamit',
+      description:
+        'Read about privacies, policies and guidines including Datamit services, products and software solutions.',
+    },
+  },
   pages: [
     {
       route: 'Terms',

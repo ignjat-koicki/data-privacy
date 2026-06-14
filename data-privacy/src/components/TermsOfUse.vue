@@ -19,6 +19,8 @@ export default {
   name: 'string',
   created() {
     this.page = LANGCONST.lang.userPages.find((x) => x.page == 'terms')
+
+    document.title = LANGCONST.lang.pageTitles['Terms'].title
   },
   data() {
     return {
@@ -37,4 +39,5 @@ export default {
 .terms-of-use-page p {
   font-weight: 400 !important;
 }
+
 </style>
